@@ -10,12 +10,47 @@ import ShaderCard from '../components/reactbits/ShaderCard';
 import { generateVegetablePdf } from '../utils/vegetablePdfGenerator';
 import { useCart } from '../context/CartContext';
 import { api } from '../services/api';
+import fallbackData from '../data/fallbackData.json';
+
+function filterFallbackProducts(list, filters) {
+  let filtered = [...(list || [])];
+  if (filters.category && filters.category !== 'All') {
+    filtered = filtered.filter(p => p.category && p.category.toLowerCase() === filters.category.toLowerCase());
+  }
+  if (filters.market && filters.market !== 'All') {
+    filtered = filtered.filter(p => p.marketId === filters.market || p.marketName === filters.market);
+  }
+  if (filters.day && filters.day !== 'All') {
+    filtered = filtered.filter(p => p.harvestDay && p.harvestDay.toLowerCase().includes(filters.day.toLowerCase()));
+  }
+  if (filters.search && filters.search.trim()) {
+    const q = filters.search.trim().toLowerCase();
+    filtered = filtered.filter(p =>
+      (p.name && p.name.toLowerCase().includes(q)) ||
+      (p.description && p.description.toLowerCase().includes(q)) ||
+      (p.farmerName && p.farmerName.toLowerCase().includes(q))
+    );
+  }
+  if (filters.inStockOnly) {
+    filtered = filtered.filter(p => !p.isSoldOut && p.stock_quantity > 0);
+  }
+  if (filters.sort === 'price-asc') {
+    filtered.sort((a, b) => a.price - b.price);
+  } else if (filters.sort === 'price-desc') {
+    filtered.sort((a, b) => b.price - a.price);
+  } else if (filters.sort === 'rating') {
+    filtered.sort((a, b) => (b.ratingAverage || 0) - (a.ratingAverage || 0));
+  } else if (filters.sort === 'popular') {
+    filtered.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0));
+  }
+  return filtered;
+}
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState([]);
-  const [markets, setMarkets] = useState([]);
+  const [products, setProducts] = useState(() => fallbackData.products || []);
+  const [markets, setMarkets] = useState(() => fallbackData.markets || []);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { addToCart } = useCart();
 
   const [filters, setFilters] = useState({
@@ -31,9 +66,11 @@ export default function ProductsPage() {
     async function loadData() {
       try {
         const m = await api.getMarkets();
-        setMarkets(m || []);
+        if (m && m.length > 0) {
+          setMarkets(m);
+        }
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching markets:', err);
       }
     }
     loadData();
@@ -41,7 +78,6 @@ export default function ProductsPage() {
 
   useEffect(() => {
     async function fetchProducts() {
-      setLoading(true);
       try {
         const queryParams = {};
         if (filters.category && filters.category !== 'All') queryParams.category = filters.category;
@@ -52,10 +88,14 @@ export default function ProductsPage() {
         if (filters.inStockOnly) queryParams.inStockOnly = 'true';
 
         const data = await api.getProducts(queryParams);
-        setProducts(data || []);
+        if (data && data.length > 0) {
+          setProducts(data);
+        } else {
+          setProducts(filterFallbackProducts(fallbackData.products, filters));
+        }
       } catch (err) {
-        console.error('Error fetching products:', err);
-        setProducts([]);
+        console.warn('Network request failed for products, using certified fallback catalog:', err);
+        setProducts(filterFallbackProducts(fallbackData.products, filters));
       } finally {
         setLoading(false);
       }
@@ -119,18 +159,19 @@ export default function ProductsPage() {
             glowColor="#10b981"
             className="h-100"
           >
-            <p className="small text-secondary mb-3">
+            <p className="mb-3" style={{ color: 'rgba(255, 255, 255, 0.95)', fontSize: '0.88rem', lineHeight: '1.65' }}>
               Each weekend, our certified partner farms reserve 50 premium wooden crates packed with peak-sweetness heirloom crops picked within 6 hours of pickup.
             </p>
-            <div className="d-flex align-items-center justify-content-between p-2 rounded-3 bg-body-tertiary border mb-3">
-              <span className="small fw-semibold text-muted">Weekly Crate Price:</span>
-              <span className="fw-bold text-success fs-5">$28.50</span>
+            <div className="d-flex align-items-center justify-content-between p-2.5 rounded-3 mb-3" style={{ background: 'rgba(0, 0, 0, 0.45)', border: '1px solid rgba(255, 255, 255, 0.22)', backdropFilter: 'blur(6px)' }}>
+              <span className="fw-semibold" style={{ color: '#ffffff', fontSize: '0.88rem' }}>Weekly Crate Price:</span>
+              <span className="fw-bold fs-5" style={{ color: '#6ee7b7' }}>$28.50</span>
             </div>
             <button
               type="button"
-              className="btn btn-sm btn-egreen w-100 rounded-pill py-2"
+              className="btn btn-sm btn-egreen w-100 rounded-pill py-2.5 fw-bold shadow-sm"
               onClick={() => {
-                if (products.length > 0) addToCart(products[0], 1);
+                const target = products.length > 0 ? products[0] : (fallbackData.products && fallbackData.products[0]);
+                if (target) addToCart(target, 1);
               }}
             >
               <i className="bi bi-basket me-1"></i> Quick Reserve Crate

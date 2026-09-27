@@ -20,12 +20,13 @@ import MorphSlider from '../components/reactbits/MorphSlider';
 import AccordionGallery from '../components/reactbits/AccordionGallery';
 import { useCart } from '../context/CartContext';
 import { api } from '../services/api';
+import fallbackData from '../data/fallbackData.json';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [markets, setMarkets] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState(() => (fallbackData.products || []).slice(0, 8));
+  const [markets, setMarkets] = useState(() => (fallbackData.markets || []).slice(0, 4));
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [telemetryMode, setTelemetryMode] = useState('harvest');
 
@@ -63,12 +64,16 @@ export default function HomePage() {
     async function loadData() {
       try {
         const prods = await api.getProducts({ inStockOnly: 'true' });
-        setFeaturedProducts(prods.slice(0, 8));
+        if (prods && prods.length > 0) {
+          setFeaturedProducts(prods.slice(0, 8));
+        }
 
         const mkts = await api.getMarkets();
-        setMarkets(mkts.slice(0, 4));
+        if (mkts && mkts.length > 0) {
+          setMarkets(mkts.slice(0, 4));
+        }
       } catch (err) {
-        console.error(err);
+        console.warn('Network request failed in HomePage, maintaining fallback catalog:', err);
       }
     }
     loadData();

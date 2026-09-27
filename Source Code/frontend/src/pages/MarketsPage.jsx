@@ -8,26 +8,47 @@ import ParticleText from '../components/reactbits/ParticleText';
 import ShaderCard from '../components/reactbits/ShaderCard';
 import { api } from '../services/api';
 
+import fallbackData from '../data/fallbackData.json';
+
 const DAYS = ['All', 'Saturday', 'Sunday', 'Wednesday', 'Tuesday', 'Friday'];
 
+function filterFallbackMarkets(list, day, query) {
+  let filtered = [...(list || [])];
+  if (day && day !== 'All') {
+    filtered = filtered.filter(m => m.operatingDays && m.operatingDays.includes(day));
+  }
+  if (query && query.trim()) {
+    const q = query.trim().toLowerCase();
+    filtered = filtered.filter(m =>
+      (m.name && m.name.toLowerCase().includes(q)) ||
+      (m.location && m.location.address && m.location.address.toLowerCase().includes(q))
+    );
+  }
+  return filtered;
+}
+
 export default function MarketsPage() {
-  const [markets, setMarkets] = useState([]);
+  const [markets, setMarkets] = useState(() => fallbackData.markets || []);
   const [selectedMarket, setSelectedMarket] = useState(null);
   const [selectedDay, setSelectedDay] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMarkets() {
-      setLoading(true);
       try {
         const data = await api.getMarkets({
           day: selectedDay !== 'All' ? selectedDay : undefined,
           search: searchQuery || undefined
         });
-        setMarkets(data || []);
+        if (data && data.length > 0) {
+          setMarkets(data);
+        } else {
+          setMarkets(filterFallbackMarkets(fallbackData.markets, selectedDay, searchQuery));
+        }
       } catch (err) {
-        console.error(err);
+        console.warn('Network request failed for markets, using fallback:', err);
+        setMarkets(filterFallbackMarkets(fallbackData.markets, selectedDay, searchQuery));
       } finally {
         setLoading(false);
       }
@@ -215,26 +236,26 @@ export default function MarketsPage() {
               glowColor="#059669"
               className="h-100"
             >
-              <p className="small text-secondary mb-3">
+              <p className="mb-3" style={{ color: 'rgba(255, 255, 255, 0.95)', fontSize: '0.88rem', lineHeight: '1.6' }}>
                 Over 45 family farms assemble every Saturday and Sunday morning at the Embarcadero Ferry Plaza. Features on-site woodfired bakers, raw hillside beekeepers, and fresh wild berry growers.
               </p>
-              <div className="d-flex flex-column gap-2 small mb-3">
+              <div className="d-flex flex-column gap-2 small mb-3 p-3 rounded-3" style={{ background: 'rgba(0, 0, 0, 0.45)', border: '1px solid rgba(255, 255, 255, 0.22)', backdropFilter: 'blur(6px)' }}>
                 <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-clock-fill text-success"></i>
-                  <span><strong>Peak Morning:</strong> 08:00 AM – 11:30 AM (Best selection)</span>
+                  <span style={{ color: '#ffffff' }}><strong style={{ color: '#6ee7b7' }}>Peak Morning:</strong> 08:00 AM – 11:30 AM (Best selection)</span>
                 </div>
                 <div className="d-flex align-items-center gap-2">
-                  <i className="bi bi-p-square-fill text-primary"></i>
-                  <span><strong>Dedicated Parking:</strong> Underground garage with 2 hrs validated</span>
+                  <i className="bi bi-p-square-fill text-info"></i>
+                  <span style={{ color: '#ffffff' }}><strong style={{ color: '#93c5fd' }}>Dedicated Parking:</strong> Underground garage with 2 hrs validated</span>
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-credit-card-2-front-fill text-warning"></i>
-                  <span><strong>Payment:</strong> Cash, Cards, Apple/Google Pay, EBT / SNAP</span>
+                  <span style={{ color: '#ffffff' }}><strong style={{ color: '#fde047' }}>Payment:</strong> Cash, Cards, Apple/Google Pay, EBT / SNAP</span>
                 </div>
               </div>
               <button
                 type="button"
-                className="btn btn-sm btn-egreen w-100 rounded-pill py-2"
+                className="btn btn-sm btn-egreen w-100 rounded-pill py-2.5 fw-bold shadow-sm"
                 onClick={() => {
                   if (markets.length > 0) setSelectedMarket(markets[0]);
                 }}

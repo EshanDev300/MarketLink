@@ -118,27 +118,61 @@ export default function ShaderCard({
           WebkitBackdropFilter: 'blur(8px)'
         }}
       >
-        <div className="d-flex align-items-center justify-content-between mb-3">
-          <span className="badge rounded-pill bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-3 py-1.5 fw-semibold" style={{ fontSize: '0.78rem' }}>
-            ⚡ {badge}
+        <div className="d-flex align-items-center justify-content-between mb-3 gap-2 flex-wrap">
+          <span
+            className="badge rounded-pill px-3 py-1.5 fw-semibold"
+            style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              fontSize: '0.78rem',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              textShadow: '0 1px 2px rgba(0,0,0,0.4)'
+            }}
+          >
+            {badge.startsWith('⚡') || badge.startsWith('🌎') ? badge : `⚡ ${badge}`}
           </span>
-          <span className="small text-white-50 fw-semibold text-uppercase tracking-wider" style={{ fontSize: '0.72rem', letterSpacing: '0.08em' }}>
+          <span
+            style={{
+              fontSize: '0.75rem',
+              letterSpacing: '0.08em',
+              color: '#6ee7b7',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+            }}
+          >
             {subtitle}
           </span>
         </div>
 
-        <h3 className="fw-bold mb-2 font-heading text-white">{title}</h3>
-        <p className="text-white-50 small mb-4 flex-grow-1" style={{ lineHeight: '1.65', maxWidth: '580px' }}>
+        <h3 className="fw-bold mb-2 font-heading" style={{ color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+          {title}
+        </h3>
+        <p
+          className="small mb-3 flex-grow-1"
+          style={{
+            lineHeight: '1.65',
+            maxWidth: '580px',
+            color: 'rgba(255, 255, 255, 0.95)',
+            textShadow: '0 1px 2px rgba(0,0,0,0.4)'
+          }}
+        >
           {description}
         </p>
 
         {/* Stats Row */}
         {stats && stats.length > 0 && (
-          <div className="row g-3 pt-3 border-top border-white border-opacity-20 mt-auto">
+          <div className="row g-3 pt-3 border-top mt-auto mb-3" style={{ borderColor: 'rgba(255, 255, 255, 0.25)' }}>
             {stats.map((s, idx) => (
               <div key={idx} className="col-4">
-                <div className="fs-4 fw-extrabold text-white font-heading">{s.val}</div>
-                <div className="small text-white-50 fw-semibold" style={{ fontSize: '0.72rem' }}>{s.label}</div>
+                <div className="fs-4 fw-bold font-heading" style={{ color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.4)' }}>
+                  {s.val}
+                </div>
+                <div className="small fw-semibold" style={{ fontSize: '0.75rem', color: '#a7f3d0' }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>

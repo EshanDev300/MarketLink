@@ -149,24 +149,24 @@ export default function AboutPage() {
             glowColor="#10b981"
             className="h-100"
           >
-            <p className="small text-secondary mb-3">
+            <p className="mb-3" style={{ color: 'rgba(255, 255, 255, 0.95)', fontSize: '0.88rem', lineHeight: '1.65' }}>
               Standard supermarket produce travels an average of 1,500 miles from industrial mega-farms, sitting in refrigerated shipping containers for weeks.
             </p>
-            <div className="p-3 bg-body-tertiary rounded-3 border mb-3 small">
-              <div className="d-flex justify-content-between mb-1.5">
-                <span>Supermarket Produce Transit:</span>
-                <strong className="text-danger">1,500 Miles</strong>
+            <div className="p-3 rounded-3 mb-3 small" style={{ background: 'rgba(0, 0, 0, 0.45)', border: '1px solid rgba(255, 255, 255, 0.22)', backdropFilter: 'blur(6px)' }}>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <span style={{ color: '#ffffff', fontWeight: 600 }}>Supermarket Produce Transit:</span>
+                <strong style={{ color: '#fca5a5', fontWeight: 700 }}>1,500 Miles</strong>
               </div>
-              <div className="d-flex justify-content-between mb-1.5">
-                <span>MarketLink Farm to Stall:</span>
-                <strong className="text-success">&lt; 18 Miles</strong>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <span style={{ color: '#ffffff', fontWeight: 600 }}>MarketLink Farm to Stall:</span>
+                <strong style={{ color: '#6ee7b7', fontWeight: 700 }}>&lt; 18 Miles</strong>
               </div>
-              <div className="d-flex justify-content-between border-top pt-1.5">
-                <span>Nutrient Degradation:</span>
-                <strong className="text-success">-0% (Sunrise Picked)</strong>
+              <div className="d-flex justify-content-between align-items-center border-top pt-2" style={{ borderColor: 'rgba(255, 255, 255, 0.2)' }}>
+                <span style={{ color: '#ffffff', fontWeight: 600 }}>Nutrient Degradation:</span>
+                <strong style={{ color: '#6ee7b7', fontWeight: 700 }}>-0% (Sunrise Picked)</strong>
               </div>
             </div>
-            <div className="small text-muted">
+            <div style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.84rem', lineHeight: '1.55' }}>
               By reserving produce directly through our pre-order platform, you keep food dollars local and regenerate regional topsoil.
             </div>
           </ShaderCard>
@@ -174,33 +174,33 @@ export default function AboutPage() {
 
         <div className="col-12 col-lg-7">
           <div className="card p-4 rounded-4 border h-100" style={{ background: 'var(--card-bg)' }}>
-            <h5 className="fw-bold mb-3 font-heading">
+            <h5 className="fw-bold mb-3 font-heading" style={{ color: 'var(--text-main, #0f172a)' }}>
               <span className="text-success me-2">🌱</span> Certified Grower Charter & Standards
             </h5>
-            <p className="small text-secondary mb-3">
+            <p className="mb-3" style={{ color: '#334155', fontSize: '0.92rem', lineHeight: '1.65', fontWeight: 500 }}>
               Every farmer and artisan baker on MarketLink undergoes verified seasonal inspection to ensure adherence to ecological growing standards:
             </p>
 
-            <div className="d-flex flex-column gap-2.5">
-              <div className="p-2.5 rounded-3 bg-body-tertiary border d-flex align-items-start gap-2.5">
-                <span className="fs-5 text-success">🌾</span>
+            <div className="d-flex flex-column gap-3">
+              <div className="p-3 rounded-3 border d-flex align-items-start gap-3" style={{ background: 'var(--input-bg, #f8fafc)', borderColor: 'var(--border-subtle, #e2e8f0)' }}>
+                <span className="fs-4 text-success">🌾</span>
                 <div>
-                  <strong className="small d-block text-dark-emphasis">Living Soil Biology</strong>
-                  <span className="small text-muted">Zero reliance on synthetic nitrogen fertilizers. Farms utilize cover cropping and vermiculture.</span>
+                  <strong className="d-block mb-1" style={{ color: '#0f172a', fontWeight: 700, fontSize: '0.95rem' }}>Living Soil Biology</strong>
+                  <span style={{ color: '#475569', fontSize: '0.875rem', lineHeight: '1.5' }}>Zero reliance on synthetic nitrogen fertilizers. Farms utilize cover cropping and vermiculture.</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-3 bg-body-tertiary border d-flex align-items-start gap-2.5">
-                <span className="fs-5 text-success">🐝</span>
+              <div className="p-3 rounded-3 border d-flex align-items-start gap-3" style={{ background: 'var(--input-bg, #f8fafc)', borderColor: 'var(--border-subtle, #e2e8f0)' }}>
+                <span className="fs-4 text-success">🐝</span>
                 <div>
-                  <strong className="small d-block text-dark-emphasis">Pollinator Protection Sanctuaries</strong>
-                  <span className="small text-muted">Dedicated wildflower corridors on farm boundaries to nurture honeybee colonies and native pollinators.</span>
+                  <strong className="d-block mb-1" style={{ color: '#0f172a', fontWeight: 700, fontSize: '0.95rem' }}>Pollinator Protection Sanctuaries</strong>
+                  <span style={{ color: '#475569', fontSize: '0.875rem', lineHeight: '1.5' }}>Dedicated wildflower corridors on farm boundaries to nurture honeybee colonies and native pollinators.</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-3 bg-body-tertiary border d-flex align-items-start gap-2.5">
-                <span className="fs-5 text-success">💧</span>
+              <div className="p-3 rounded-3 border d-flex align-items-start gap-3" style={{ background: 'var(--input-bg, #f8fafc)', borderColor: 'var(--border-subtle, #e2e8f0)' }}>
+                <span className="fs-4 text-success">💧</span>
                 <div>
-                  <strong className="small d-block text-dark-emphasis">Water Stewardship & Drip Conservation</strong>
-                  <span className="small text-muted">Precision micro-drip irrigation that conserves over 60% of water compared to commercial sprayers.</span>
+                  <strong className="d-block mb-1" style={{ color: '#0f172a', fontWeight: 700, fontSize: '0.95rem' }}>Water Stewardship & Drip Conservation</strong>
+                  <span style={{ color: '#475569', fontSize: '0.875rem', lineHeight: '1.5' }}>Precision micro-drip irrigation that conserves over 60% of water compared to commercial sprayers.</span>
                 </div>
               </div>
             </div>
