@@ -108,4 +108,11 @@ async function startServer() {
   });
 }
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+} else {
+  connectDB();
+  autoSeedDatabase();
+}
+
+module.exports = app;

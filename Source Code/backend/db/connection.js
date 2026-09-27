@@ -3,7 +3,11 @@ const fs = require('fs');
 const path = require('path');
 
 let isMongoConnected = false;
-const DATA_FILE = path.join(__dirname, '..', 'data', 'database.json');
+const ORIGINAL_DATA_FILE = path.join(__dirname, '..', 'data', 'database.json');
+const TMP_DATA_FILE = path.join('/tmp', 'database.json');
+
+// In-memory cache to guarantee zero downtime even on read-only environments
+let inMemoryDb = null;
 
 // Initialize database file if it doesn't exist
 const initialData = {
@@ -17,25 +21,54 @@ const initialData = {
   notifications: []
 };
 
+function getActiveDataFile() {
+  if (process.env.VERCEL) {
+    if (!fs.existsSync(TMP_DATA_FILE)) {
+      try {
+        if (fs.existsSync(ORIGINAL_DATA_FILE)) {
+          fs.copyFileSync(ORIGINAL_DATA_FILE, TMP_DATA_FILE);
+        } else {
+          fs.writeFileSync(TMP_DATA_FILE, JSON.stringify(initialData, null, 2));
+        }
+      } catch (e) {
+        console.warn('Notice: Serverless /tmp initialization fallback to memory cache');
+      }
+    }
+    return TMP_DATA_FILE;
+  }
+  return ORIGINAL_DATA_FILE;
+}
+
 function readDbFile() {
   try {
-    if (!fs.existsSync(DATA_FILE)) {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(initialData, null, 2));
+    const dataFile = getActiveDataFile();
+    if (!fs.existsSync(dataFile)) {
+      if (inMemoryDb) return inMemoryDb;
+      if (fs.existsSync(ORIGINAL_DATA_FILE)) {
+        const raw = fs.readFileSync(ORIGINAL_DATA_FILE, 'utf8');
+        inMemoryDb = JSON.parse(raw);
+        return inMemoryDb;
+      }
       return initialData;
     }
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(raw);
+    const raw = fs.readFileSync(dataFile, 'utf8');
+    inMemoryDb = JSON.parse(raw);
+    return inMemoryDb;
   } catch (err) {
+    if (inMemoryDb) return inMemoryDb;
     console.error('Error reading DB JSON file:', err);
     return initialData;
   }
 }
 
 function writeDbFile(data) {
+  inMemoryDb = data;
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    const dataFile = getActiveDataFile();
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
   } catch (err) {
-    console.error('Error saving DB JSON file:', err);
+    // In-memory fallback
+    console.warn('File write fallback: data kept in memory');
   }
 }
 
