@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MarketLink — Software Requirements Specification & Technical Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+    @bottom-right {
+      content: "Page " counter(page);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 8pt;
+      color: #64748b;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+    line-height: 1.6;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-break { page-break-after: always; }
+  .no-break { page-break-inside: avoid; }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: #064e3b;
+    margin-top: 18pt;
+    margin-bottom: 8pt;
+    letter-spacing: -0.02em;
+  }
+  h1 { font-size: 22pt; color: #064e3b; border-bottom: 2.5px solid #10b981; padding-bottom: 6pt; }
+  h2 { font-size: 15pt; color: #0f5132; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4pt; }
+  h3 { font-size: 12pt; color: #15803d; }
+  h4 { font-size: 10.5pt; color: #1e293b; }
+
+  p { margin-top: 0; margin-bottom: 8pt; text-align: justify; }
+
+  /* Cover Page */
+  .cover-page {
+    height: 100%;
+    min-height: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30pt 20pt;
+    border: 3px solid #10b981;
+    border-radius: 20px;
+    background: radial-gradient(circle at 10% 10%, #ecfdf5 0%, #ffffff 70%);
+    position: relative;
+    page-break-after: always;
+  }
+
+  .cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #a7f3d0;
+    padding-bottom: 14pt;
+  }
+
+  .cover-tag {
+    background: #10b981;
+    color: white;
+    font-weight: 700;
+    font-size: 8.5pt;
+    padding: 4pt 12pt;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cover-body {
+    margin: 40pt 0;
+    text-align: center;
+  }
+
+  .cover-logo {
+    font-size: 48pt;
+    margin-bottom: 8pt;
+  }
+
+  .cover-title {
+    font-size: 34pt;
+    font-weight: 800;
+    color: #064e3b;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .cover-subtitle {
+    font-size: 15pt;
+    color: #15803d;
+    font-weight: 600;
+    font-style: italic;
+    margin-top: 6pt;
+    margin-bottom: 20pt;
+  }
+
+  .cover-desc {
+    max-width: 520px;
+    margin: 0 auto;
+    color: #475569;
+    font-size: 10.5pt;
+    line-height: 1.6;
+  }
+
+  .meta-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 14px;
+    padding: 16pt;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+  }
+
+  .meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+  }
+
+  .meta-table td {
+    padding: 4pt 8pt;
+  }
+
+  .meta-table td.label {
+    font-weight: 700;
+    color: #064e3b;
+    width: 35%;
+  }
+
+  /* Callout Boxes */
+  .callout {
+    padding: 10pt 14pt;
+    border-radius: 10pt;
+    margin: 10pt 0;
+    font-size: 9.5pt;
+  }
+  .callout-success {
+    background: #ecfdf5;
+    border-left: 4px solid #10b981;
+    color: #065f46;
+  }
+  .callout-info {
+    background: #f0f9ff;
+    border-left: 4px solid #0284c7;
+    color: #075985;
+  }
+  .callout-warning {
+    background: #fefce8;
+    border-left: 4px solid #f59e0b;
+    color: #854d0e;
+  }
+
+  /* Tables */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12pt 0;
+    font-size: 9pt;
+  }
+  table.data-table th {
+    background: #064e3b;
+    color: white;
+    font-weight: 700;
+    text-align: left;
+    padding: 7pt 9pt;
+    border: 1px solid #064e3b;
+  }
+  table.data-table td {
+    padding: 6pt 9pt;
+    border: 1px solid #cbd5e1;
+    vertical-align: middle;
+  }
+  table.data-table tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2pt 7pt;
+    border-radius: 6pt;
+    font-weight: 600;
+    font-size: 7.5pt;
+  }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-amber { background: #fef3c7; color: #92400e; }
+  .badge-blue { background: #e0f2fe; color: #075985; }
+
+  /* Code Block */
+  pre, code {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 8.5pt;
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 6pt;
+  }
+  pre {
+    padding: 10pt;
+    border: 1px solid #e2e8f0;
+    overflow-x: auto;
+    margin: 8pt 0;
+  }
+  code { padding: 1pt 4pt; }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: flex;
+    gap: 10pt;
+    margin: 12pt 0;
+  }
+  .metric-box {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 10pt;
+    padding: 10pt;
+    text-align: center;
+  }
+  .metric-val {
+    font-size: 16pt;
+    font-weight: 800;
+    color: #10b981;
+    font-family: 'Outfit', sans-serif;
+  }
+  .metric-label {
+    font-size: 8pt;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div class="cover-header">
+    <div style="font-weight: 800; color: #064e3b; font-size: 13pt;">TECHWIZ 7 CHAMPIONSHIP</div>
+    <div class="cover-tag">eGreen Basket Theme</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-logo">🌱🧺</div>
+    <h1 class="cover-title">MarketLink</h1>
+    <div class="cover-subtitle">Farm Fresh Just a Click Away</div>
+    <p class="cover-desc">
+      A unified full-stack web application connecting certified local farmers market growers directly with neighborhood consumers. Features predictable weekly recurring harvest stock, 0% gateway in-person pickup settlement, interactive OpenStreetMap navigation, and 24/7 AI Intelligent Assistance.
+    </p>
+  </div>
+
+  <div class="meta-card">
+    <table class="meta-table">
+      <tr>
+        <td class="label">Project Name:</td>
+        <td>MarketLink</td>
+        <td class="label">Version:</td>
+        <td>1.0 (Final Official Release)</td>
+      </tr>
+      <tr>
+        <td class="label">Championship:</td>
+        <td>Aptech TechWiz 7</td>
+        <td class="label">Category:</td>
+        <td>End-to-End Web Solutions</td>
+      </tr>
+      <tr>
+        <td class="label">Technology Stack:</td>
+        <td>React 18 • Bootstrap 5 & Custom CSS (No Tailwind) • Node.js • Express • MongoDB</td>
+      </tr>
+      <tr>
+        <td class="label">Interactive Elements:</td>
+        <td>ReactBits (Custom Cursor, DecryptedText, BentoGrid, SpotlightCard) • Three.js 3D Basket • OpenStreetMap</td>
+      </tr>
+      <tr>
+        <td class="label">Documentation Date:</td>
+        <td>September 2026</td>
+        <td class="label">Deliverables:</td>
+        <td>PDF, Word (.docx & .doc), Plain Text (.txt), SQL Script</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 1: PROBLEM DEFINITION & SOLUTION -->
+<div class="page-break">
+  <h1>1. Executive Summary & Problem Definition</h1>
+
+  <h2>1.1 Background & Necessity</h2>
+  <p>
+    Local farmers markets are growing rapidly across urban and suburban communities as health-conscious shoppers seek fresh, seasonal, and locally grown agricultural produce. Despite rising popularity, traditional market operations suffer from acute communication bottlenecks and logistical friction:
+  </p>
+  <ul>
+    <li><strong>Shopper Uncertainty & Wasted Trips:</strong> Consumers rarely know in advance which farmers will attend a particular market day, what varieties they will bring, or at what prices. Popular seasonal items (such as organic berries or sourdough) frequently sell out within the first 30 minutes, resulting in wasted commutes and frustration.</li>
+    <li><strong>Farmer Harvest Miscalculation & Waste:</strong> Growers lack pre-harvest demand visibility. Over-harvesting causes unsold perishable surplus at the end of hot market days, causing agricultural food waste. Under-harvesting deprives farmers of potential revenue.</li>
+    <li><strong>Lack of Spatial Coordination:</strong> Stalls are informally distributed, making it challenging for customers with tight schedules to locate vendors and pick up orders quickly.</li>
+  </ul>
+
+  <div class="callout callout-success">
+    <strong>💡 The MarketLink Vision:</strong> MarketLink transforms local farmers markets by establishing a digital pre-order loop. Farmers publish weekly recurring inventory templates prior to harvest day, and customers reserve produce baskets with specific morning pickup windows. Pre-orders are paid for in-person at pickup, protecting growers from credit card gateway deductions and ensuring fair trade.
+  </div>
+
+  <h2>1.2 Core Objectives</h2>
+  <div class="metrics-grid">
+    <div class="metric-box">
+      <div class="metric-val">100%</div>
+      <div class="metric-label">Guaranteed Produce Pickup</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-val">0%</div>
+      <div class="metric-label">Online Gateway Deduction</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-val">30+</div>
+      <div class="metric-label">Farmers Supported</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-val">24/7</div>
+      <div class="metric-label">AI Market Assistance</div>
+    </div>
+  </div>
+
+  <h2>1.3 Out-of-Scope Clarifications (As per SRS Page 8)</h2>
+  <p>
+    In strict compliance with the TechWiz 7 SRS guidelines:
+  </p>
+  <ul>
+    <li><strong>No Online Payment Gateways:</strong> Payment for pre-orders is settled 100% in person at market pickup (Cash, Card, or Mobile Pay at the stall).</li>
+    <li><strong>No Courier / Delivery Logistics:</strong> The platform explicitly supports market-day pickup only, eliminating delivery carbon emissions.</li>
+    <li><strong>No Food Safety / Certification Auditing:</strong> Government licensing verification is handled by physical market organizers outside the application scope.</li>
+  </ul>
+</div>
+
+<!-- SECTION 2: SYSTEM ARCHITECTURE & TECH STACK -->
+<div class="page-break">
+  <h1>2. System Architecture & UI/UX Design System</h1>
+
+  <h2>2.1 Multi-Tier Architecture</h2>
+  <p>
+    MarketLink implements a resilient, clean multi-tier web architecture designed for responsiveness, high performance, and rapid maintainability:
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 22%;">Layer</th>
+        <th style="width: 28%;">Technology Stack</th>
+        <th>Architectural Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Presentation (Frontend)</strong></td>
+        <td>React 18, Vite, Bootstrap 5, Custom CSS</td>
+        <td>Single Page Application (SPA), reactive state management, custom cursor follower, responsive layouts across mobile/desktop. Strictly Zero Tailwind CSS.</td>
+      </tr>
+      <tr>
+        <td><strong>Interactive UI (ReactBits)</strong></td>
+        <td>ReactBits Components, GSAP, CSS Animations</td>
+        <td>DecryptedText cyber-organic headings, SpotlightCard mouse-following radial glows, BentoGrid ecosystem cards, MagnetButton interactions, animated counters.</td>
+      </tr>
+      <tr>
+        <td><strong>3D Graphics Engine</strong></td>
+        <td>Three.js Canvas Engine</td>
+        <td>Interactive 3D harvest basket containing organic fruits, vegetables, ambient golden pollen particles, and cursor-tracking tilt responsiveness.</td>
+      </tr>
+      <tr>
+        <td><strong>Mapping & Geolocation</strong></td>
+        <td>Leaflet, OpenStreetMap API</td>
+        <td>Interactive community market locator with custom markers, popup details, coordinates, and turn-by-turn routing directions.</td>
+      </tr>
+      <tr>
+        <td><strong>Application Server (Backend)</strong></td>
+        <td>Node.js, Express.js REST API</td>
+        <td>Stateless REST endpoints, JWT authorization, stock auto-deduction and restoration, AI assistant integration, notification dispatch.</td>
+      </tr>
+      <tr>
+        <td><strong>Database & Persistence</strong></td>
+        <td>MongoDB Native + Mongoose ODM</td>
+        <td>Scalable document storage with automated schema validation and embedded persistent memory fallback for instant zero-config evaluation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2.2 UI/UX Philosophy: The "eGreen Basket" Aesthetic</h2>
+  <p>
+    The visual interface is crafted around a cohesive organic nature theme:
+  </p>
+  <ul>
+    <li><strong>Color Palette:</strong> Deep Forest Green (<code>#064e3b</code>), Fresh Emerald (<code>#10b981</code>), Mint Light (<code>#ecfdf5</code>), Golden Amber (<code>#f59e0b</code>), Warm Earth (<code>#78350f</code>).</li>
+    <li><strong>Typography:</strong> <em>Outfit</em> for modern, approachable editorial headings and <em>Plus Jakarta Sans</em> for crisp legibility across body text and tables.</li>
+    <li><strong>Glassmorphism:</strong> Translucent glass cards with <code>backdrop-filter: blur(14px)</code> and soft green ambient glows.</li>
+  </ul>
+</div>
+
+<!-- SECTION 3: FUNCTIONAL SPECIFICATIONS -->
+<div class="page-break">
+  <h1>3. Functional Requirements & Role Breakdown</h1>
+
+  <h2>3.1 Customer Features</h2>
+  <ul>
+    <li><strong>Registration & Authentication:</strong> Full profile with name, email, phone, and address. Role-based login with JWT security.</li>
+    <li><strong>Browse Markets & Interactive Map:</strong> Filter markets by day (Saturday, Sunday, Wednesday) and city. View stall locations on OpenStreetMap with direct navigation links.</li>
+    <li><strong>Produce Catalog & Multi-Criteria Filtering:</strong> Filter by Category (Vegetables, Fruits, Dairy, Bakery, Honey, Herbs), price range, market, and in-stock availability.</li>
+    <li><strong>Pre-Order for Market Pickup:</strong> Add produce to harvest basket, choose pickup date and morning time window (e.g. 09:00 AM – 10:00 AM). Stock is automatically reserved.</li>
+    <li><strong>Order Management & Modification:</strong> Track status timeline (Placed → Accepted → Ready for Pickup → Completed). Modify pickup time slot or cancel before farmer cutoff time.</li>
+    <li><strong>1-Click Re-Order:</strong> Instant re-order feature for recurring weekly staples.</li>
+    <li><strong>Favorites & Restock Alerts:</strong> Bookmark favorite farmers and staple produce for quick weekly access.</li>
+    <li><strong>Ratings & Reviews:</strong> Post 1–5 star reviews with comments after order completion.</li>
+  </ul>
+
+  <h2>3.2 Farmer / Vendor Features</h2>
+  <ul>
+    <li><strong>Stall Profile Management:</strong> Set stall name, contact person, market location, operating days, pickup time windows, and cutoff hours.</li>
+    <li><strong>Weekly Stock & Pricing Management:</strong> Full CRUD operations for products (name, category, price, unit, stock quantity, harvest day, photo). Support for recurring weekly templates.</li>
+    <li><strong>Toggle Sold-Out Status:</strong> 1-click toggle to mark items sold out or restore availability as harvest updates.</li>
+    <li><strong>Pre-Order Fulfillment Workflow:</strong> View incoming customer pre-orders, accept or decline with cancellation reasons, mark orders "Ready for Pickup", and record in-person completion.</li>
+    <li><strong>Farmer Sales Insights:</strong> Real-time KPI summaries: Total Revenue, Pending Orders, Active Listings, and Best-Selling items.</li>
+    <li><strong>Customer Review Responder:</strong> View customer reviews and post public grower responses.</li>
+  </ul>
+
+  <h2>3.3 Administrator Features</h2>
+  <ul>
+    <li><strong>Executive KPI Dashboard:</strong> Platform metrics: Total Farmers, Pending Approvals, Total Customers, Active Markets, Total Pre-Orders, and Revenue across all hubs.</li>
+    <li><strong>Farmer Verification & Approval:</strong> View new farmer registrations and approve or suspend them before they can list products.</li>
+    <li><strong>Customer Account Moderation:</strong> Activate or suspend customer accounts in case of policy violations.</li>
+    <li><strong>Farmers Markets CRUD:</strong> Add, edit, or remove community markets with GPS coordinates, operating schedules, and directions.</li>
+    <li><strong>Content Moderation:</strong> Inspect and remove inappropriate product listings or customer reviews.</li>
+    <li><strong>Global Announcements:</strong> Broadcast platform-wide alerts and market news to farmers and customers.</li>
+  </ul>
+
+  <h2>3.4 Built-in AI Market Assistant (24/7)</h2>
+  <p>
+    An intelligent, domain-trained chatbot embedded in every page. It queries live database records to answer customer questions about:
+  </p>
+  <ul>
+    <li>Operating hours and days for each farmers market.</li>
+    <li>Farmer attendance, stall numbers, and pickup time windows.</li>
+    <li>Product availability (e.g., "Find organic heirloom tomatoes").</li>
+    <li>How pre-orders work and payment settlement at the stall.</li>
+  </ul>
+</div>
+
+<!-- SECTION 4: DATABASE DESIGN & TEST CREDENTIALS -->
+<div class="page-break">
+  <h1>4. Database Schema & Test Credentials</h1>
+
+  <h2>4.1 Relational Schema & MongoDB Document Mapping</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Entity / Collection</th>
+        <th>Primary Key / Identifier</th>
+        <th>Foreign Relationships</th>
+        <th>Key Attributes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Users</strong></td>
+        <td><code>_id / user_id</code></td>
+        <td>—</td>
+        <td>name, username, email, password_hash, role ('admin','farmer','customer'), status, stallName, pickupTimeWindows.</td>
+      </tr>
+      <tr>
+        <td><strong>Markets</strong></td>
+        <td><code>_id / market_id</code></td>
+        <td>—</td>
+        <td>name, address, city, operatingDays, timings, latitude, longitude, map_provider, stallCount, image.</td>
+      </tr>
+      <tr>
+        <td><strong>Products</strong></td>
+        <td><code>_id / product_id</code></td>
+        <td><code>farmerId → Users</code></td>
+        <td>name, category, price, unit, stock_quantity, image, isSoldOut, isRecurringTemplate, harvestDay, ratingAverage.</td>
+      </tr>
+      <tr>
+        <td><strong>Orders</strong></td>
+        <td><code>_id / order_id</code></td>
+        <td><code>customerId, farmerId → Users</code></td>
+        <td>orderNumber, items [product, qty, price], total_amount, order_status, pickupDate, pickupTimeSlot, paymentStatus.</td>
+      </tr>
+      <tr>
+        <td><strong>Reviews</strong></td>
+        <td><code>_id / review_id</code></td>
+        <td><code>productId, farmerId, customerId</code></td>
+        <td>rating (1–5), comment, farmerReply, farmerReplyAt, createdAt.</td>
+      </tr>
+      <tr>
+        <td><strong>Announcements</strong></td>
+        <td><code>_id / announcement_id</code></td>
+        <td>—</td>
+        <td>title, message, audience ('all','farmers','customers'), type, active.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4.2 User Credentials Matrix (MANDATORY TechWiz Requirement)</h2>
+  <div class="callout callout-info">
+    ⚡ <strong>Evaluator Quick Login:</strong> The application header includes a "⚡ Quick Demo Roles" dropdown allowing evaluators to switch between Admin, Farmer, and Customer with 1 click without typing passwords.
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Full Name</th>
+        <th>Email / Username</th>
+        <th>Password</th>
+        <th>Access Scope & Permissions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-amber">Admin</span></td>
+        <td>Platform Administrator</td>
+        <td><code>admin@marketlink.com</code><br/><small>username: admin</small></td>
+        <td><code>admin123</code></td>
+        <td>Full governance, farmer approvals, customer activation, markets CRUD, moderation, sales reports.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Farmer 1</span></td>
+        <td>Ramesh Kumar (Green Valley)</td>
+        <td><code>greenvalley@marketlink.com</code><br/><small>username: farmer_john</small></td>
+        <td><code>farmer123</code></td>
+        <td>Weekly recurring stock management, pre-order fulfillment, mark ready, review replies.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Farmer 2</span></td>
+        <td>Lakshmi Devi (Sunny Meadow)</td>
+        <td><code>sunnyorchard@marketlink.com</code></td>
+        <td><code>farmer123</code></td>
+        <td>Orchard fruit & berry stock management, morning pickup window settings.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-amber">Pending Farmer</span></td>
+        <td>New Organic Grower</td>
+        <td><code>newfarmer@marketlink.com</code></td>
+        <td><code>farmer123</code></td>
+        <td>Pending verification account (Used to test the Admin 1-Click Approval workflow).</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">Customer 1</span></td>
+        <td>Priya Sharma</td>
+        <td><code>priya@marketlink.com</code><br/><small>username: priya_s</small></td>
+        <td><code>customer123</code></td>
+        <td>Browse markets, map directions, place pre-orders, choose pickup slots, modify/cancel, reviews.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">Customer 2</span></td>
+        <td>Rahul Verma</td>
+        <td><code>rahul@marketlink.com</code></td>
+        <td><code>customer123</code></td>
+        <td>Fresh harvest pre-orders, saved favorite farms, and order history.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 5: INSTALLATION & VERIFICATION -->
+<div class="page-break">
+  <h1>5. Project Installation & Execution Instructions</h1>
+
+  <h2>5.1 System Prerequisites</h2>
+  <ul>
+    <li><strong>Node.js:</strong> v18.0.0 or higher (Tested on Node.js v24.18.0)</li>
+    <li><strong>Database:</strong> MongoDB (Local daemon or MongoDB Atlas). If MongoDB is offline, the backend's automatic persistent JSON fallback engine activates seamlessly.</li>
+    <li><strong>Browser:</strong> Chrome, Edge, or Firefox.</li>
+  </ul>
+
+  <h2>5.2 Step-by-Step Launch Commands</h2>
+  <p><strong>Step 1: Start the Backend REST API Server</strong></p>
+  <pre>cd "d:\MarketLink\Source Code\backend"
+node server.js</pre>
+  <p><em>Output: 🚀 MarketLink Server running on: http://localhost:5000</em></p>
+
+  <p><strong>Step 2: Start the React Frontend Application</strong></p>
+  <pre>cd "d:\MarketLink\Source Code\frontend"
+npx vite --port 3000</pre>
+  <p><em>Output: ➜ Local: http://localhost:3000/</em></p>
+
+  <h2>5.3 Evaluation Live Links</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Target Component</th>
+        <th>URL</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Frontend Web Application</strong></td>
+        <td><code>http://localhost:3000</code></td>
+        <td>React 18 SPA with 3D Basket, Leaflet Map, ReactBits components.</td>
+      </tr>
+      <tr>
+        <td><strong>Backend REST API</strong></td>
+        <td><code>http://localhost:5000</code></td>
+        <td>Express API with MongoDB native connectivity.</td>
+      </tr>
+      <tr>
+        <td><strong>System Health Check</strong></td>
+        <td><code>http://localhost:5000/api/health</code></td>
+        <td>Reports server health, theme name, and active database mode.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5.4 Compliance Checklist</h2>
+  <ul>
+    <li>✅ <strong>Zero Tailwind CSS:</strong> Crafted with pure Bootstrap 5 and handcrafted custom CSS.</li>
+    <li>✅ <strong>React & MongoDB:</strong> React 18 client talking to Node/Express REST API backed by MongoDB.</li>
+    <li>✅ <strong>ReactBits Interactive UI:</strong> Custom cursor, DecryptedText, BentoGrid, SpotlightCard, MagnetButton.</li>
+    <li>✅ <strong>Three.js 3D Animations:</strong> Interactive 3D harvest basket with ambient particles and cursor tracking.</li>
+    <li>✅ <strong>OpenStreetMap Integration:</strong> Live coordinates, stall markers, and route navigation.</li>
+    <li>✅ <strong>In-Person Settlement:</strong> Pre-orders settled at pickup in compliance with SRS scope.</li>
+    <li>✅ <strong>Multi-Format Documentation:</strong> PDF, Word (.docx & .doc), Plain Text (.txt), and SQL DDL scripts.</li>
+  </ul>
+</div>
+
+</body>
+</html>

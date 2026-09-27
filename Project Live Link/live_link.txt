@@ -1,0 +1,13 @@
+================================================================================
+                    MARKETLINK (eGreen Basket) - PROJECT LIVE LINKS
+                              Aptech TechWiz 7
+================================================================================
+
+1. LOCAL DEVELOPMENT & EVALUATION ENVIRONMENT:
+--------------------------------------------------------------------------------
+Frontend Application:    http://localhost:3000
+Backend REST API:        http://localhost:5000
+API Health Endpoint:     http://localhost:5000/api/health
+Database:                MongoDB Native (mongodb://127.0.0.1:27017/marketlink)
+                         + Zero-Config JSON Persistent Engine Fallback
+

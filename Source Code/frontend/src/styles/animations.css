@@ -1,0 +1,226 @@
+/* =========================================================
+   Animations, Keyframes & Glow Systems
+   ========================================================= */
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes popUpSpring {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+  }
+  60% {
+    transform: translateY(-6px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes floatGentle {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1.2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes shinyShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Navbar Shiny Border Shimmer */
+@keyframes navbarShinySweep {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  50%, 100% {
+    transform: translateX(250%) rotate(25deg);
+  }
+}
+
+/* Gradient Carousel Infinite Track Scroll */
+@keyframes gradientCarouselScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* AI Blob Morph & Breathing Pulse */
+@keyframes aiBlobPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+}
+
+@keyframes aiBlobThinkingPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+    filter: blur(8px);
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    filter: blur(14px);
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+    filter: blur(8px);
+  }
+}
+
+@keyframes aiBlobRotateRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Lattice Loader Matrix Node Pulse */
+@keyframes latticePulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.35;
+    box-shadow: 0 0 4px #10b981;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+    box-shadow: 0 0 14px #10b981, 0 0 22px #34d399;
+  }
+  100% {
+    transform: scale(0.65);
+    opacity: 0.35;
+    box-shadow: 0 0 4px #10b981;
+  }
+}
+
+/* Neon Glow Border Breathing */
+@keyframes neonBorderGlow {
+  0%, 100% {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2), inset 0 0 15px rgba(16, 185, 129, 0.05);
+  }
+  50% {
+    border-color: rgba(52, 211, 153, 0.85);
+    box-shadow: 0 0 25px rgba(52, 211, 153, 0.45), inset 0 0 20px rgba(52, 211, 153, 0.15);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 4.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.4s infinite;
+}
+
+.animate-neon-border {
+  animation: neonBorderGlow 3s infinite ease-in-out;
+}
+
+.shiny-text {
+  background: linear-gradient(
+    90deg,
+    #15803d 0%,
+    #10b981 25%,
+    #34d399 50%,
+    #84cc16 75%,
+    #15803d 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shinyShimmer 4s linear infinite;
+}
+
+[data-theme="dark"] .shiny-text {
+  background: linear-gradient(
+    90deg,
+    #34d399 0%,
+    #10b981 25%,
+    #6ee7b7 50%,
+    #a7f3d0 75%,
+    #34d399 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shinyShimmer 4s linear infinite;
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 185, 129, 0.6) 0%,
+    rgba(52, 211, 153, 1) 50%,
+    rgba(16, 185, 129, 0.6) 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shinyShimmer 2s linear infinite;
+}
+
+.aurora-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  background: radial-gradient(circle at 20% 25%, rgba(187, 247, 208, 0.45) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(254, 240, 138, 0.35) 0%, transparent 45%),
+              radial-gradient(circle at 60% 80%, rgba(167, 243, 208, 0.5) 0%, transparent 60%);
+  filter: blur(45px);
+}
+
+[data-theme="dark"] .aurora-bg-container {
+  opacity: 0.35;
+  background: radial-gradient(circle at 20% 25%, rgba(16, 185, 129, 0.25) 0%, transparent 55%),
+              radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 60% 80%, rgba(6, 78, 59, 0.4) 0%, transparent 65%);
+  filter: blur(55px);
+}

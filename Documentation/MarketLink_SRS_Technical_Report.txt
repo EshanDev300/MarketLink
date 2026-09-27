@@ -1,0 +1,127 @@
+================================================================================
+MARKETLINK (eGreen Basket) - SRS TECHNICAL REPORT & SYSTEM DOCUMENTATION
+Version: 1.0 | Aptech TechWiz 7 Project Specifications
+Theme: eGreen Basket - Organic Farmers' Market Pre-Order Platform
+================================================================================
+
+1. EXECUTIVE SUMMARY & PROBLEM STATEMENT
+--------------------------------------------------------------------------------
+MarketLink is a comprehensive, full-stack digital solution addressing the challenges
+faced by local farmers' markets and community shoppers. Local agricultural markets
+traditionally face:
+- Unpredictable footfall and customer turnout.
+- Early morning stockouts where popular produce sells out within hours.
+- High post-harvest waste for unsold perishable fruits and vegetables.
+- Lack of modern online visibility for smallholder organic farmers.
+
+MarketLink solves these problems through a zero-commission, pre-order & stall
+pickup architecture where settlement happens 100% in person at the physical stall
+(Cash, Card, UPI). By reserving produce prior to market day:
+- Customers are guaranteed fresh, organic harvest waiting for them.
+- Farmers know exact order volumes in advance to pack and transport accurately.
+- Community connection is preserved through in-person farmer-shopper pickup.
+
+
+2. SYSTEM ARCHITECTURE & TECHNICAL STACK
+--------------------------------------------------------------------------------
+Frontend:
+- Framework: React 18 (Vite build engine)
+- Styling: Bootstrap 5.3 + Custom CSS / SCSS (Strictly Zero Tailwind CSS)
+- Interactive Elements (reactbits.dev inspired):
+  * Custom Cursor with trailing follower ring and organic hover states
+  * DecryptedText cyber-organic character scramble animation
+  * SpotlightCard cursor-following radial gradient sheen
+  * BentoGrid layout for ecosystem feature cards
+  * ShinyText, MagnetButtons, CounterNumbers
+- 3D Graphics: Three.js interactive 3D harvest basket canvas with organic fruits,
+  vegetables, ambient floating golden pollen, and cursor-reactive tilt
+- Mapping: Leaflet + OpenStreetMap with custom leafy markers and driving route links
+
+Backend:
+- Runtime: Node.js 20+ with Express.js REST API
+- Endpoints:
+  * /api/auth          : Authentication, registration, token verification
+  * /api/markets       : Market directory, search, coordinates, vendor rosters
+  * /api/products      : Produce catalog, categories, multi-filters, stock CRUD
+  * /api/orders        : Pre-order creation, status lifecycle, cancellation
+  * /api/reviews       : Verified customer reviews, farmer response replies
+  * /api/admin         : Platform KPIs, farmer vetting, market CRUD, announcements
+  * /api/ai            : 24/7 AI market assistant querying live produce & schedules
+  * /api/notifications : Role-targeted alert notifications drawer
+- Database: MongoDB via Mongoose ODM + High-availability persistent JSON fallback
+
+
+3. ROLE-BASED FEATURES & SRS COMPLIANCE
+--------------------------------------------------------------------------------
+A. CUSTOMER / SHOPPER
+- Market Directory: Search markets by name, city, zip code, and operating day.
+- Harvest Catalog: Multi-filter produce by category, organic status, price, market.
+- Interactive 3D Canvas: Interactive 3D harvest basket on hero section.
+- Pre-Order Cart: Date selection and morning pickup slot (8-10 AM, 10-12 PM, 12-2 PM).
+- Clear In-Person Payment: Transparent notice that payment is settled at pickup.
+- Customer Dashboard: Real-time 4-step progress bar (Placed -> Accepted -> Ready -> Completed).
+- Cancellation / Modification: Allowed before farmer morning cut-off time.
+- 1-Click Re-Order & Reviews: Fast re-ordering and verified 5-star ratings.
+
+B. FARMER / VENDOR
+- Inventory Management: Full CRUD for produce items with quantity, unit, and photos.
+- Sold Out Toggle: Instantly toggle produce availability in real time.
+- Recurring Templates: Save weekly harvest templates to re-list items instantly.
+- Order Fulfillment: Accept / decline incoming orders; update to 'Ready' and 'Completed'.
+- Morning Pickup Schedules: Consolidated morning pickup sheet with customer names.
+- Stall Bio & Reviews: Grower profile with farming philosophy and review responder.
+
+C. PLATFORM ADMINISTRATOR / MARKET MASTER
+- KPI Dashboard: Total Orders, Active Farmers, Customers, Markets, Revenue metrics.
+- Farmer Application Approval: Vetting queue with 1-click Approve / Reject.
+- Market Venues Management: Full CRUD for market locations, hours, and coordinates.
+- Review Moderation: Monitor, moderate, or remove inappropriate feedback.
+- Broadcast Announcements: Publish weather alerts and announcements across the site.
+
+
+4. USER CREDENTIALS MATRIX FOR EVALUATION
+--------------------------------------------------------------------------------
++-------------------+----------------------------+-------------+----------------------+
+| Role              | Email                      | Password    | Permissions          |
++-------------------+----------------------------+-------------+----------------------+
+| Administrator     | admin@marketlink.com       | admin123    | Full Platform Access |
+| Farmer 1 (Green)  | greenvalley@marketlink.com | farmer123   | Stall Management     |
+| Farmer 2 (Sunny)  | sunnyorchard@marketlink.com| farmer123   | Produce & Orders     |
+| Farmer 3 (Roots)  | newfarmer@marketlink.com   | farmer123   | Fresh Harvest CRUD   |
+| Customer 1 (Priya)| priya@marketlink.com       | customer123 | Pre-Orders, Reviews  |
+| Customer 2 (Rahul)| rahul@marketlink.com       | customer123 | Cart, Dashboard      |
++-------------------+----------------------------+-------------+----------------------+
+
+* Quick Role Switcher: The top navbar features a "⚡ Quick Demo Roles" dropdown
+  allowing instantaneous 1-click switching between Admin, Farmer, and Customer roles!
+
+
+5. LOCAL RUNNING INSTRUCTIONS
+--------------------------------------------------------------------------------
+1. Prerequisites: Node.js 18+ and MongoDB (optional, auto-fallback included).
+2. Backend Setup:
+   cd "Source Code/backend"
+   npm install
+   npm run start   (Runs on http://localhost:5000)
+3. Frontend Setup:
+   cd "Source Code/frontend"
+   npm install
+   npm run dev     (Runs on http://localhost:3000)
+4. Open your browser and navigate to: http://localhost:3000
+
+
+6. PROJECT SUBMISSION DELIVERABLES INDEX
+--------------------------------------------------------------------------------
+- Documentation/MarketLink_SRS_Technical_Report.pdf  : Full-Color PDF Report
+- Documentation/MarketLink_SRS_Technical_Report.docx : Word OpenXML Document
+- Documentation/MarketLink_SRS_Technical_Report.doc  : Word Rich HTML Document
+- Documentation/MarketLink_SRS_Technical_Report.txt  : Plain Text Technical Report
+- Documentation/Database_Design.sql                  : Complete Database Schema
+- Documentation/ARCHITECTURE_AND_FLOWCHARTS.md       : System Architecture & Mermaid
+- Documentation/INSTALLATION_INSTRUCTIONS.md         : Installation & Setup Guide
+- All Users Credential/credentials.txt               : User Credentials Matrix
+- Problem Definition.txt                             : Problem Statement & Scope
+- Tested Data.txt                                    : Comprehensive Test Datasets
+- Project Live Link/live_link.txt                    : Application URLs
+- Project Demonstration Video/video_demo_guide.txt   : Step-by-Step Video Script
+================================================================================

@@ -1,0 +1,66 @@
+================================================================================
+                           MARKETLINK (eGreen Basket)
+                       SOFTWARE REQUIREMENTS SPECIFICATION
+                               PROBLEM DEFINITION
+================================================================================
+Project Name: MarketLink
+Theme: eGreen Basket
+Category: End-to-End Web Solutions
+Version: 1.0 (Aptech TechWiz 7)
+
+1. BACKGROUND AND CONTEXT
+Local farmers markets are experiencing tremendous growth as conscious consumers
+seek fresh, seasonal, nutrient-dense, and locally grown produce. However, under
+traditional market dynamics, both farmers and customers encounter persistent friction:
+
+a) Shopper Uncertainty & Wasted Trips:
+   Shoppers rarely know in advance which farmers will attend a particular market
+   day, what crop varieties will be available, at what prices, or whether specific
+   produce will sell out minutes after gates open. Availability is typically
+   communicated informally through chalkboards, printed flyers, or social media
+   posts that lack real-time synchronization. Shoppers arrive to find high-demand
+   staples sold out or discover that a grower is closed for the week.
+
+b) Vendor Stock Management & Harvest Planning:
+   Growers lack a streamlined channel to broadcast weekly harvest availability,
+   forecast demand prior to harvesting, and secure pre-orders. Over-harvesting leads
+   to post-market food waste and financial loss, while under-harvesting results in
+   unmet customer demand.
+
+c) Geographic & Pickup Coordination:
+   Traditional markets lack integrated digital mapping and schedule clarity,
+   making stall identification and pickup logistics inconvenient for working
+   families and time-conscious buyers.
+
+2. PROPOSED SOLUTION: MARKETLINK (eGREEN BASKET)
+MarketLink is a responsive full-stack Web application that bridges local growers
+and consumers on a unified, transparent platform:
+
+• Digital Stalls & Weekly Inventory:
+  Farmers establish verified stall profiles, configure recurring weekly stock
+  templates, adjust quantities based on upcoming Friday harvests, and specify
+  pickup hours.
+
+• Predictable Pre-Orders with In-Person Settlement:
+  Customers browse real-time inventory, filter by category/market/day, reserve
+  baskets, and select convenient morning pickup slots. Pre-orders are paid for
+  in person directly at the stall (Cash / Card / Mobile Pay), preserving fair trade
+  and eliminating third-party payment gateway fees.
+
+• Embedded OpenStreetMap & Geolocation:
+  Interactive maps display market coordinates, stall locations, and route directions
+  for seamless order pickup.
+
+• Role-Based Governance:
+  Dedicated dashboards tailored for Customers, Farmers, and System Administrators.
+
+• Built-in AI Intelligent Assistant:
+  Assists customers 24/7 with inquiries regarding market hours, vendor attendance,
+  produce availability, and pre-order pickup procedures.
+
+3. GOALS AND ANTICIPATED IMPACT
+- 100% elimination of wasted trips through pre-order reservation guarantees.
+- Significant reduction in farm-level harvest waste through predictable pre-demand.
+- Direct economic empowerment of regional smallholder agriculture.
+- Convenient, transparent, and sustainable community food ecosystem.
+================================================================================

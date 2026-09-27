@@ -1,0 +1,106 @@
+================================================================================
+                           MARKETLINK (eGreen Basket)
+                               TESTED DATA SETS
+================================================================================
+Project: MarketLink (Theme: eGreen Basket)
+Category: End-to-End Web Solutions
+Version: 1.0 (Aptech TechWiz 7)
+
+1. USER ACCOUNTS (CREDENTIALS & TEST PERSONAS)
+--------------------------------------------------------------------------------
+ROLE: SYSTEM ADMINISTRATOR
+• Name: Platform Administrator
+• Email: admin@marketlink.com  (or admin@marketlink.org)
+• Password: admin123
+• Status: Active
+• Access Scope: Full Platform Oversight, Farmer Verification, Content Moderation,
+                Market Locations CRUD, Global Announcements, Analytics Reports.
+
+ROLE: FARMER / VENDOR 1
+• Name: Ramesh Kumar
+• Stall Name: Green Valley Organic Farm
+• Email: greenvalley@marketlink.com  (or farmer.john@marketlink.org)
+• Password: farmer123
+• Status: Active
+• Operating Days: Saturday, Sunday
+• Pickup Window: 08:00 AM – 01:00 PM
+• Cutoff Time: 4 Hours before pickup
+• Stalls: Stall #12, Downtown Green Farmers Market
+
+ROLE: FARMER / VENDOR 2
+• Name: Lakshmi Devi
+• Stall Name: Sunny Meadow Berries & Orchards
+• Email: sunnyorchard@marketlink.com  (or farmer.sarah@marketlink.org)
+• Password: farmer123
+• Status: Active
+• Operating Days: Wednesday, Saturday
+• Pickup Window: 09:00 AM – 01:30 PM
+• Stalls: Stall #4, Sunset Harbor Organic Pavilion
+
+ROLE: FARMER / VENDOR 3 (PENDING APPROVAL TEST CASE)
+• Name: New Organic Grower
+• Stall Name: New Harvest Co-op
+• Email: newfarmer@marketlink.com
+• Password: farmer123
+• Status: Pending (Used to test Admin Approval workflow)
+
+ROLE: CUSTOMER 1
+• Name: Priya Sharma
+• Email: priya@marketlink.com  (or customer.emma@marketlink.org)
+• Password: customer123
+• Status: Active
+• Phone: +1 (555) 777-1234
+• Favorites: Green Valley Organic Farm, Heirloom Tomatoes, Sweet Albion Strawberries
+
+ROLE: CUSTOMER 2
+• Name: Rahul Verma
+• Email: rahul@marketlink.com
+• Password: customer123
+• Status: Active
+
+2. PARTICIPATING FARMERS MARKETS (LOCATIONS & COORDINATES)
+--------------------------------------------------------------------------------
+1. Downtown Green Farmers Market
+   • Location: 100 Plaza Central, Civic Center, San Francisco, CA
+   • Coordinates: Latitude 37.7793, Longitude -122.4192
+   • Days: Saturday, Sunday (08:00 AM – 01:30 PM)
+   • Map Provider: OpenStreetMap
+
+2. Sunset Harbor Organic Pavilion
+   • Location: Pier 24 Esplanade, Marina District, San Francisco, CA
+   • Coordinates: Latitude 37.7600, Longitude -122.4800
+   • Days: Wednesday, Saturday (09:00 AM – 02:00 PM)
+
+3. Oakridge Community Eco Market
+   • Location: 550 Elmwood Avenue, North Valley Park, CA
+   • Coordinates: Latitude 37.7950, Longitude -122.4000
+   • Days: Tuesday, Thursday, Saturday (08:30 AM – 01:30 PM)
+
+4. Meadowview Country Fair Market
+   • Location: 1200 Old County Fairgrounds, Meadowview, CA
+   • Coordinates: Latitude 37.7500, Longitude -122.4400
+   • Days: Sunday (07:30 AM – 12:30 PM)
+
+3. HARVEST PRODUCT CATALOG SAMPLES
+--------------------------------------------------------------------------------
+• Heirloom Brandywine Tomatoes | Veg | $4.80/kg | Stock: 45 kg | Farmer: Green Valley
+• Hydroponic Butterhead Lettuce | Veg | $2.75/bunch | Stock: 60 bunches
+• Organic Albion Strawberries | Fruit | $5.50/basket | Stock: 32 baskets | Farmer: Sunny Meadow
+• Raw Wildflower Honeycomb & Honey | Honey | $11.00/jar | Stock: 24 jars
+• Slow-Fermented Artisan Country Sourdough | Bakery | $7.25/loaf | Stock: 20 loaves
+• Rainbow Organic Carrots Bunch | Veg | $3.50/bunch | Stock: 38 bunches
+• Crisp Honeycrisp Apples | Fruit | $4.20/kg | Stock: 50 kg
+• Fresh Free-Range Pasture Brown Eggs | Dairy & Eggs | $6.50/dozen | Stock: 28 dozen
+
+4. PRE-ORDER LIFECYCLE TEST SCENARIOS
+--------------------------------------------------------------------------------
+• Order #ML-2026-8941: Status = READY FOR PICKUP (Customer: Priya, Farmer: Green Valley)
+• Order #ML-2026-8942: Status = COMPLETED (Paid In-Person at Stall: $18.25 Cash)
+• Order Modification Test: Changing pickup slot from 09:00 AM to 11:00 AM prior to cutoff.
+• Order Cancellation Test: Cancelling order restores stock quantity to farm inventory.
+
+5. FEEDBACK & REVIEWS TEST DATA
+--------------------------------------------------------------------------------
+• Review 1: 5 Stars on Heirloom Tomatoes — Farmer reply submitted and displayed.
+• Review 2: 5 Stars on Raw Wildflower Honey — Rating reflected in average rating calculation.
+================================================================================
